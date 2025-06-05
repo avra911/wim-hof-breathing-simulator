@@ -1,6 +1,6 @@
 # Wim Hof Breathing Simulator
 
-An interactive breathing exercise simulator based on the Wim Hof Method. Customize preparation time, number of rounds, breath speed, holds, and pauses with audio cues to guide your practice.
+An interactive breathing exercise simulator based on the Wim Hof Method. Customize preparation time, number of rounds, breath speed, holds and pauses with audio cues to guide your practice.
 
 ## Features
 
