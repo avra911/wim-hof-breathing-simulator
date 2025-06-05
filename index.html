@@ -21,6 +21,7 @@
     font-weight: bold;
     margin-top: 0.2rem;
     color: #007bff;
+    display: none; /* Hidden initially */
   }
   #settingsToggle {
     cursor: pointer;
@@ -169,6 +170,7 @@
 
   const settingsForm = document.getElementById('settingsForm');
   const settingsToggle = document.getElementById('settingsToggle');
+  const simpleControls = document.getElementById('simpleControls');
 
   const phaseDisplay = document.getElementById('phaseDisplay');
   const timerDisplay = document.getElementById('timerDisplay');
@@ -282,6 +284,16 @@
     return m > 0 ? `${m}:${s.toString().padStart(2,'0')}` : s.toString();
   }
 
+  // Show timer display
+  function showTimer() {
+    timerDisplay.style.display = 'block';
+  }
+
+  // Hide timer display
+  function hideTimer() {
+    timerDisplay.style.display = 'none';
+  }
+
   // Main async breathing loop
   async function runBreathing() {
     stopRequested = false;
@@ -292,24 +304,24 @@
     const breathSpeed = parseInt(document.getElementById('breathSpeed').value, 10) || 3;
     const numBreaths = parseInt(document.getElementById('numBreaths').value, 10) || 30;
     const breathOutHold = parseInt(document.getElementById('breathOutHold').value, 10) || 90;
-    const deepBreathTime = parseInt(document.getElementById('deepBreathTime').value, 10) || 4;
     const holdTime = parseInt(document.getElementById('holdTime').value, 10) || 15;
+    const deepBreathTime = parseInt(document.getElementById('deepBreathTime').value, 10) || 4;
     const pauseAfterRound = parseInt(document.getElementById('pauseAfterRound').value, 10) || 7;
 
-    // Disable start button, enable stop
     startBtnSimple.disabled = true;
     stopBtnSimple.disabled = false;
 
+    // Preparation Phase
     phaseDisplay.textContent = "Get Ready...";
+    showTimer();
     timerDisplay.textContent = displayTime(prepTime);
-
-    // Prep countdown with beep
     for (let i = prepTime; i > 0; i--) {
       if (stopRequested) break;
       timerDisplay.textContent = displayTime(i);
       playBeep(prepBeepFreq, 150);
       await sleep(1000);
     }
+    hideTimer();
 
     if (stopRequested) {
       resetUI();
@@ -321,14 +333,19 @@
 
       // Breathing phase: numBreaths cycles inhale/exhale
       phaseDisplay.textContent = `Round ${round} - Breathing`;
+
       for (let breath = 1; breath <= numBreaths; breath++) {
+        hideTimer();
         if (stopRequested) break;
+
+        // Inhale
         phaseDisplay.textContent = `Round ${round} - Breath ${breath} Inhale`;
         timerDisplay.textContent = displayTime(breathSpeed);
         playBeep(inhaleFreq, 200);
         await sleep(breathSpeed * 1000);
-
         if (stopRequested) break;
+
+        // Exhale
         phaseDisplay.textContent = `Round ${round} - Breath ${breath} Exhale`;
         timerDisplay.textContent = displayTime(breathSpeed);
         playBeep(exhaleFreq, 200);
@@ -336,15 +353,17 @@
       }
       if (stopRequested) break;
 
-      // Hold after breathing out (custom round hold time or default breathOutHold)
+      // Hold after breath out
       let holdAfterBreathOut = customRounds.has(round) ? customRounds.get(round) : breathOutHold;
       phaseDisplay.textContent = `Round ${round} - Hold after breath out`;
+      showTimer();
       for (let i = holdAfterBreathOut; i > 0; i--) {
         if (stopRequested) break;
         timerDisplay.textContent = displayTime(i);
         playBeep(holdFreq, 150);
         await sleep(1000);
       }
+      hideTimer();
       if (stopRequested) break;
 
       // Deep breath in
@@ -357,48 +376,63 @@
 
       // Hold after deep breath
       phaseDisplay.textContent = `Round ${round} - Hold after Deep Breath`;
+      showTimer();
       for (let i = holdTime; i > 0; i--) {
         if (stopRequested) break;
         timerDisplay.textContent = displayTime(i);
         playBeep(holdFreq, 150);
         await sleep(1000);
       }
+      hideTimer();
       if (stopRequested) break;
 
-      // Pause after round
+      // Pause after round except after last
       if (round !== totalRounds) {
-        phaseDisplay.textContent = `Round ${round} - Pause`;
+        phaseDisplay.textContent = `Round ${round} - Breath out`;
+        showTimer();
         for (let i = pauseAfterRound; i > 0; i--) {
           if (stopRequested) break;
           timerDisplay.textContent = displayTime(i);
           await sleep(1000);
         }
+        hideTimer();
       }
 
       playBeep(roundEndFreq, 300);
     }
 
     phaseDisplay.textContent = 'Finished!';
+    hideTimer();
     timerDisplay.textContent = '';
 
     resetUI();
   }
 
+  // Reset UI to initial state
   function resetUI() {
     running = false;
     stopRequested = false;
     startBtnSimple.disabled = false;
     stopBtnSimple.disabled = true;
+    hideTimer();
+    timerDisplay.textContent = '';
   }
 
   startBtnSimple.addEventListener('click', () => {
-    if (running) return;
-    runBreathing();
+    if (!running) {
+      runBreathing();
+    }
   });
 
   stopBtnSimple.addEventListener('click', () => {
-    stopRequested = true;
+    if (running) {
+      stopRequested = true;
+      phaseDisplay.textContent = 'Stopping...';
+    }
   });
+
+  // Initialize UI
+  resetUI();
 </script>
 </body>
 </html>
