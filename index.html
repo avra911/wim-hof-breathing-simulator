@@ -115,6 +115,12 @@
       .then(reg => console.log('Service Worker registered', reg))
       .catch(err => console.error('Service Worker registration failed', err));
   }
+
+  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    document.body.classList.add('bg-dark', 'text-light');
+  } else {
+    document.body.classList.remove('bg-dark', 'text-light');
+  }
 </script>
 </body>
 </html>
