@@ -121,6 +121,29 @@
   </footer>  
 
 <script>
+  let wakeLock = null;
+
+  async function requestWakeLock() {
+    try {
+      if ('wakeLock' in navigator) {
+        wakeLock = await navigator.wakeLock.request('screen');
+        wakeLock.addEventListener('release', () => {
+          console.log('Screen Wake Lock released');
+        });
+        console.log('Screen Wake Lock acquired');
+      }
+    } catch (err) {
+      console.error(`${err.name}, ${err.message}`);
+    }
+  }
+
+  function releaseWakeLock() {
+    if (wakeLock) {
+      wakeLock.release();
+      wakeLock = null;
+    }
+  }
+
   // Helper sleep function
   function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -299,6 +322,8 @@
     stopRequested = false;
     running = true;
 
+    await requestWakeLock();
+
     const prepTime = parseInt(document.getElementById('prepTime').value, 10) || 10;
     const totalRounds = parseInt(document.getElementById('rounds').value, 10) || 3;
     const breathSpeed = parseInt(document.getElementById('breathSpeed').value, 10) || 2.5;
@@ -412,6 +437,7 @@
   function resetUI() {
     running = false;
     stopRequested = false;
+    releaseWakeLock();
     startBtnSimple.disabled = false;
     stopBtnSimple.disabled = true;
     hideTimer();
