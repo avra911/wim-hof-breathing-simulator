@@ -4,22 +4,22 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Wim Hof Breathing Simulator</title>
-<link href="/bootstrap.min.css" rel="stylesheet" />
-<link rel="stylesheet" href="/style.css">
+<link href="./bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="./style.css">
 
-<link rel="icon" type="image/png" href="/icons/favicon-96x96.png" sizes="96x96" />
-<link rel="icon" type="image/svg+xml" href="/icons/favicon.svg" />
-<link rel="shortcut icon" href="/icons/favicon.ico" />
-<link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+<link rel="icon" type="image/png" href="./icons/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="./icons/favicon.svg" />
+<link rel="shortcut icon" href="./icons/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="./icons/apple-touch-icon.png" />
 
-<link rel="manifest" href="/manifest.json" />
+<link rel="manifest" href="./manifest.json" />
 <meta name="theme-color" content="#ffffff" />
-<link rel="icon" href="/icons/web-app-manifest-192x192.png" />
+<link rel="icon" href="./icons/web-app-manifest-192x192.png" />
 
 <!-- iOS support (fallbacks, not full PWA) -->
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-<link rel="apple-touch-icon" href="/icons/web-app-manifest-192x192.png" />
+<link rel="apple-touch-icon" href="./icons/web-app-manifest-192x192.png" />
 </head>
 <body>
   <h2 class="mb-4 text-center">Wim Hof Breathing</h2>
@@ -108,10 +108,10 @@
     Made with ❤️ in EU · <a href="https://github.com/avra911/wim-hof-breathing-simulator" target="_blank" class="underline hover:text-blue-500">GitHub Repo</a>
   </footer>  
 
-<script src="/script.js"></script>
+<script src="./script.js"></script>
 <script>
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js')
+    navigator.serviceWorker.register('./sw.js')
       .then(reg => console.log('Service Worker registered', reg))
       .catch(err => console.error('Service Worker registration failed', err));
   }
