@@ -1,0 +1,28 @@
+body {
+    padding: 2rem;
+    max-width: 600px;
+    margin: auto;
+}
+
+#phaseDisplay {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-top: 1rem;
+}
+
+#timerDisplay {
+    font-size: 2.2rem;
+    font-weight: bold;
+    margin-top: 0.2rem;
+    color: #007bff;
+    display: none;
+}
+
+#settingsToggle {
+    cursor: pointer;
+    font-size: 1.5rem;
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    user-select: none;
+}
