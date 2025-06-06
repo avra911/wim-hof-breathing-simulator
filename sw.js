@@ -1,14 +1,14 @@
 const CACHE_NAME = "breathing-sim-v1";
 const urlsToCache = [
-  "/",
-  "/index.html",
-  "/offline.html",
-  "/bootstrap.min.css",
-  "/style.css",
-  "/script.js",
-  "/offline.html",
-  "/icons/web-app-manifest-192x192.png",
-  "/icons/web-app-manifest-512x512.png"
+  "./",
+  "./index.html",
+  "./offline.html",
+  "./bootstrap.min.css",
+  "./style.css",
+  "./script.js",
+  "./offline.html",
+  "./icons/web-app-manifest-192x192.png",
+  "./icons/web-app-manifest-512x512.png"
 ];
 
 // Install
