@@ -13,10 +13,17 @@ const urlsToCache = [
 
 // Install
 self.addEventListener("install", (event) => {
+  console.log("[ServiceWorker] Install event");
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(urlsToCache))
+    caches.open(CACHE_NAME)
+      .then((cache) => {
+        console.log("[ServiceWorker] Caching files");
+        return cache.addAll(urlsToCache);
+      })
+      .catch(err => {
+        console.error("[ServiceWorker] Cache failed:", err);
+      })
   );
-  self.skipWaiting();
 });
 
 // Activate
