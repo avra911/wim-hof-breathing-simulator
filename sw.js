@@ -2,7 +2,6 @@ const CACHE_NAME = "breathing-sim-v1";
 const urlsToCache = [
   "./",
   "./index.html",
-  "./offline.html",
   "./bootstrap.min.css",
   "./style.css",
   "./script.js",
