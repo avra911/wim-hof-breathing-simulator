@@ -10,7 +10,7 @@ An interactive breathing exercise simulator based on the Wim Hof Method. Customi
 - Set hold durations after exhale and after deep breath
 - Pause between rounds with countdown
 - Add custom hold times for specific rounds
-- Audio beeps for inhale, exhale, holds, and round transitions
+- Audio beeps for inhale, exhale, holds and round transitions
 - Save and load settings using localStorage
 - Simple, responsive UI built with Bootstrap 5
 - Toggle settings panel visibility with settings icon
