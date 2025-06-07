@@ -1,5 +1,6 @@
 let wakeLock = null;
-
+let paused = false;
+let pauseResolve = null;
 let DEFAULTS = {};
 
 async function loadDefaults() {
@@ -130,6 +131,7 @@ const maxCustomRoundsText = document.getElementById('maxCustomRoundsText');
 
 // Simple controls buttons
 const startBtnSimple = document.getElementById('startBtnSimple');
+const pauseBtnSimple = document.getElementById('pauseBtnSimple');
 const stopBtnSimple = document.getElementById('stopBtnSimple');
 
 const settingsForm = document.getElementById('settingsForm');
@@ -148,6 +150,25 @@ const exhaleFreq = 330;
 const holdFreq = 220;
 const roundEndFreq = 550;
 const prepBeepFreq = 660;
+
+pauseBtnSimple.addEventListener('click', () => {
+    if (!paused) {
+        paused = true;
+        pauseBtnSimple.textContent = 'Resume';
+        phaseDisplay.textContent = 'Paused';
+    } else {
+        paused = false;
+        pauseBtnSimple.textContent = 'Pause';
+        if (pauseResolve) pauseResolve();
+    }
+});
+
+async function checkPaused() {
+    if (paused) {
+        await new Promise(resolve => pauseResolve = resolve);
+        pauseResolve = null;
+    }
+}
 
 // Store custom rounds in Map: roundNumber -> holdTime
 let customRounds = new Map();
@@ -271,9 +292,9 @@ async function runBreathing() {
     const holdTime = parseInt(document.getElementById('holdTime').value, 10) || getDefault('holdTime');
     const deepBreathTime = parseInt(document.getElementById('deepBreathTime').value, 10) || getDefault('deepBreathTime');
     const pauseAfterRound = parseInt(document.getElementById('pauseAfterRound').value, 10) || getDefault('pauseAfterRound');
-    const restoreDefaultsBtn = document.getElementById('restoreDefaultsBtn');
 
     startBtnSimple.disabled = true;
+    pauseBtnSimple.disabled = true;
     stopBtnSimple.disabled = false;
 
     // Preparation Phase
@@ -300,6 +321,7 @@ async function runBreathing() {
         phaseDisplay.textContent = `Round ${round} - Breathing`;
 
         for (let breath = 1; breath <= numBreaths; breath++) {
+            await checkPaused();
             hideTimer();
             if (stopRequested) break;
 
@@ -334,12 +356,16 @@ async function runBreathing() {
         let holdAfterBreathOut = customRounds.has(round) ? customRounds.get(round) : breathOutHold;
         phaseDisplay.textContent = `Round ${round} - Hold after breath out`;
         showTimer();
+
+        pauseBtnSimple.disabled = false;
         for (let i = holdAfterBreathOut; i > 0; i--) {
+            await checkPaused();
             if (stopRequested) break;
             timerDisplay.textContent = displayTime(i);
             playBeep(holdFreq, 150);
             await sleep(1000);
         }
+        pauseBtnSimple.disabled = true;
         hideTimer();
         if (stopRequested) break;
 
@@ -409,6 +435,10 @@ async function runBreathing() {
 
 // Reset UI to initial state
 function resetUI() {
+    pauseBtnSimple.disabled = true;
+    pauseBtnSimple.textContent = 'Pause';
+    paused = false;
+
     running = false;
     stopRequested = false;
     releaseWakeLock();
@@ -417,6 +447,8 @@ function resetUI() {
     hideTimer();
     timerDisplay.textContent = '';
 }
+
+const restoreDefaultsBtn = document.getElementById('restoreDefaultsBtn');
 
 restoreDefaultsBtn.addEventListener('click', async () => {
     // Remove user settings from localStorage
