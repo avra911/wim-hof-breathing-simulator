@@ -1,36 +1,36 @@
 {
-    "name": "Wim Hof Breathing Simulator",
-    "short_name": "WHBS",
-    "start_url": ".",
-    "display": "standalone",
-    "background_color": "#000000",
-    "theme_color": "#121212",
-    "orientation": "portrait",
-    "description": "A breathing exercise simulator to help you relax.",
-    "icons": [
-      {
-        "src": "icons/web-app-manifest-192x192.png",
-        "sizes": "192x192",
-        "type": "image/png"
-      },
-      {
-        "src": "icons/web-app-manifest-512x512.png",
-        "sizes": "512x512",
-        "type": "image/png"
-      }
-    ],
-    "screenshots": [
-      {
-        "src": "screenshots/desktop-wide.png",
-        "sizes": "1280x720",
-        "type": "image/png",
-        "form_factor": "wide"
-      },
-      {
-        "src": "screenshots/mobile-narrow.png",
-        "sizes": "375x667",
-        "type": "image/png",
-        "form_factor": "narrow"
-      }
-    ]
-  }
+  "name": "Wim Hof Breathing Simulator",
+  "short_name": "WHBS",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#121212",
+  "orientation": "portrait",
+  "description": "A breathing exercise simulator to help you relax.",
+  "icons": [
+    {
+      "src": "icons/web-app-manifest-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/web-app-manifest-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "screenshots/desktop-wide.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "screenshots/mobile-narrow.png",
+      "sizes": "375x667",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ]
+}
