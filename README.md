@@ -14,6 +14,7 @@ An interactive breathing exercise simulator based on the Wim Hof Method. Customi
 - Save and load settings using localStorage
 - Simple, responsive UI built with Bootstrap 5
 - Toggle settings panel visibility with settings icon
+- **PWA ready:** Works offline after first load (installable on desktop & mobile)
 
 ## Demo
 
@@ -27,3 +28,5 @@ Clone this repository:
 git clone https://github.com/avra911/wim-hof-breathing-simulator.git
 cd wim-hof-breathing-simulator
 ```
+
+You can **fork this repo** and change the default settings in the code to match your desired rounds or preferences.
