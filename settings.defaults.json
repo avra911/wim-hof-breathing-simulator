@@ -9,8 +9,8 @@
   "pauseAfterRound": 7,
   "customRounds": [
     {
-        "round": 1,
-        "time": 60
+      "round": 1,
+      "time": 60
     }
   ]
 }
