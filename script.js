@@ -3,9 +3,38 @@ let wakeLock = null;
 let DEFAULTS = {};
 
 async function loadDefaults() {
-    const resp = await fetch('./settings.defaults.json');
-    DEFAULTS = await resp.json();
+    const stored = localStorage.getItem('wimhof_settings');
+
+    if (stored) {
+        DEFAULTS = JSON.parse(stored);
+    } else {
+        const resp = await fetch('./settings.defaults.json');
+        DEFAULTS = await resp.json();
+    }
 }
+
+function saveDefaultsToLocalStorage() {
+    const settings = {
+        prepTime: parseInt(document.getElementById('prepTime').value, 10),
+        rounds: parseInt(document.getElementById('rounds').value, 10),
+        breathSpeed: parseFloat(document.getElementById('breathSpeed').value),
+        numBreaths: parseInt(document.getElementById('numBreaths').value, 10),
+        breathOutHold: parseInt(document.getElementById('breathOutHold').value, 10),
+        holdTime: parseInt(document.getElementById('holdTime').value, 10),
+        deepBreathTime: parseInt(document.getElementById('deepBreathTime').value, 10),
+        pauseAfterRound: parseInt(document.getElementById('pauseAfterRound').value, 10),
+        customRounds: Array.from(customRounds.entries()).map(([round, time]) => ({ round, time }))
+    };
+
+    localStorage.setItem('wimhof_settings', JSON.stringify(settings));
+}
+
+[
+    'prepTime', 'rounds', 'breathSpeed', 'numBreaths',
+    'breathOutHold', 'holdTime', 'deepBreathTime', 'pauseAfterRound'
+].forEach(id => {
+    document.getElementById(id).addEventListener('input', saveDefaultsToLocalStorage);
+});
 
 function getDefault(key) {
     return DEFAULTS[key];
@@ -152,6 +181,7 @@ function renderCustomRounds() {
             li.appendChild(btn);
             customRoundsList.appendChild(li);
         });
+    saveDefaultsToLocalStorage();
 }
 
 // Add custom round handler
@@ -180,6 +210,7 @@ addCustomRoundBtn.addEventListener('click', () => {
 
     customRounds.set(round, time);
     renderCustomRounds();
+    saveDefaultsToLocalStorage();
 
     customRoundNumberInput.value = '';
     customRoundTimeInput.value = '';
@@ -240,6 +271,7 @@ async function runBreathing() {
     const holdTime = parseInt(document.getElementById('holdTime').value, 10) || getDefault('holdTime');
     const deepBreathTime = parseInt(document.getElementById('deepBreathTime').value, 10) || getDefault('deepBreathTime');
     const pauseAfterRound = parseInt(document.getElementById('pauseAfterRound').value, 10) || getDefault('pauseAfterRound');
+    const restoreDefaultsBtn = document.getElementById('restoreDefaultsBtn');
 
     startBtnSimple.disabled = true;
     stopBtnSimple.disabled = false;
@@ -385,6 +417,13 @@ function resetUI() {
     hideTimer();
     timerDisplay.textContent = '';
 }
+
+restoreDefaultsBtn.addEventListener('click', async () => {
+    // Remove user settings from localStorage
+    localStorage.removeItem('wimhof_settings');
+    // Reload defaults from JSON and update form/UI
+    await initializeSettingsForm();
+});
 
 startBtnSimple.addEventListener('click', () => {
     if (!running) {
