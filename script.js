@@ -1,5 +1,40 @@
 let wakeLock = null;
 
+let DEFAULTS = {};
+
+async function loadDefaults() {
+    const resp = await fetch('./settings.defaults.json');
+    DEFAULTS = await resp.json();
+}
+
+function getDefault(key) {
+    return DEFAULTS[key];
+}
+
+async function initializeSettingsForm() {
+    await loadDefaults();
+    document.getElementById('prepTime').value = getDefault('prepTime');
+    document.getElementById('rounds').value = getDefault('rounds');
+    document.getElementById('breathSpeed').value = getDefault('breathSpeed');
+    document.getElementById('numBreaths').value = getDefault('numBreaths');
+    document.getElementById('breathOutHold').value = getDefault('breathOutHold');
+    document.getElementById('holdTime').value = getDefault('holdTime');
+    document.getElementById('deepBreathTime').value = getDefault('deepBreathTime');
+    document.getElementById('pauseAfterRound').value = getDefault('pauseAfterRound');
+
+    // Set up customRounds from defaults
+    customRounds.clear();
+    if (Array.isArray(DEFAULTS.customRounds)) {
+        DEFAULTS.customRounds.forEach(({ round, time }) => {
+            customRounds.set(round, time);
+        });
+    }
+    renderCustomRounds();
+}
+
+// Call this before any code that reads input values
+initializeSettingsForm();
+
 async function requestWakeLock() {
     try {
         if ('wakeLock' in navigator) {
@@ -173,10 +208,6 @@ settingsToggle.addEventListener('click', () => {
 // Initialize max custom rounds text
 updateMaxCustomRoundsText();
 
-// Initialize with round 1 custom hold time = 60
-customRounds.set(1, 60);
-renderCustomRounds();
-
 // Timer display helper
 function displayTime(seconds) {
     const m = Math.floor(seconds / 60);
@@ -201,14 +232,14 @@ async function runBreathing() {
 
     await requestWakeLock();
 
-    const prepTime = parseInt(document.getElementById('prepTime').value, 10) || 10;
-    const totalRounds = parseInt(document.getElementById('rounds').value, 10) || 3;
-    const breathSpeed = parseInt(document.getElementById('breathSpeed').value, 10) || 2.5;
-    const numBreaths = parseInt(document.getElementById('numBreaths').value, 10) || 30;
-    const breathOutHold = parseInt(document.getElementById('breathOutHold').value, 10) || 90;
-    const holdTime = parseInt(document.getElementById('holdTime').value, 10) || 15;
-    const deepBreathTime = parseInt(document.getElementById('deepBreathTime').value, 10) || 4;
-    const pauseAfterRound = parseInt(document.getElementById('pauseAfterRound').value, 10) || 7;
+    const prepTime = parseInt(document.getElementById('prepTime').value, 10) || getDefault('prepTime');
+    const totalRounds = parseInt(document.getElementById('rounds').value, 10) || getDefault('rounds');
+    const breathSpeed = parseInt(document.getElementById('breathSpeed').value, 10) || getDefault('breathSpeed');
+    const numBreaths = parseInt(document.getElementById('numBreaths').value, 10) || getDefault('numBreaths');
+    const breathOutHold = parseInt(document.getElementById('breathOutHold').value, 10) || getDefault('breathOutHold');
+    const holdTime = parseInt(document.getElementById('holdTime').value, 10) || getDefault('holdTime');
+    const deepBreathTime = parseInt(document.getElementById('deepBreathTime').value, 10) || getDefault('deepBreathTime');
+    const pauseAfterRound = parseInt(document.getElementById('pauseAfterRound').value, 10) || getDefault('pauseAfterRound');
 
     startBtnSimple.disabled = true;
     stopBtnSimple.disabled = false;

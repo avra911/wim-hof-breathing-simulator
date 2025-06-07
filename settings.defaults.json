@@ -1,0 +1,16 @@
+{
+  "prepTime": 10,
+  "rounds": 3,
+  "breathSpeed": 2.5,
+  "numBreaths": 30,
+  "breathOutHold": 90,
+  "holdTime": 15,
+  "deepBreathTime": 4,
+  "pauseAfterRound": 7,
+  "customRounds": [
+    {
+        "round": 1,
+        "time": 60
+    }
+  ]
+}
