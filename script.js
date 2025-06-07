@@ -244,14 +244,26 @@ async function runBreathing() {
             phaseDisplay.textContent = `Round ${round} - Breath ${breath} Inhale`;
             timerDisplay.textContent = displayTime(breathSpeed);
             playBeep(inhaleFreq, 200);
-            await sleep(breathSpeed * 1000);
+            await new Promise(resolve => {
+                window.animateBreath({
+                    duration: breathSpeed,
+                    inhale: true,
+                    onDone: resolve
+                });
+            });
             if (stopRequested) break;
 
             // Exhale
             phaseDisplay.textContent = `Round ${round} - Breath ${breath} Exhale`;
             timerDisplay.textContent = displayTime(breathSpeed);
             playBeep(exhaleFreq, 200);
-            await sleep(breathSpeed * 1000);
+            await new Promise(resolve => {
+                window.animateBreath({
+                    duration: breathSpeed,
+                    inhale: false,
+                    onDone: resolve
+                });
+            });
         }
         if (stopRequested) break;
 
@@ -272,7 +284,13 @@ async function runBreathing() {
         phaseDisplay.textContent = `Round ${round} - Deep Breath Inhale`;
         timerDisplay.textContent = displayTime(deepBreathTime);
         playBeep(inhaleFreq, 200);
-        await sleep(deepBreathTime * 1000);
+        await new Promise(resolve => {
+            window.animateBreath({
+                duration: deepBreathTime,
+                inhale: true,
+                onDone: resolve
+            });
+        });
 
         if (stopRequested) break;
 
@@ -292,11 +310,27 @@ async function runBreathing() {
         if (round !== totalRounds) {
             phaseDisplay.textContent = `Round ${round} - Breath out`;
             showTimer();
-            for (let i = pauseAfterRound; i > 0; i--) {
-                if (stopRequested) break;
-                timerDisplay.textContent = displayTime(i);
-                await sleep(1000);
-            }
+
+            // Run timer and exhale animation in parallel
+            await Promise.all([
+                // Animate exhale (shrinking) during pause
+                new Promise(resolve => {
+                    window.animateBreath({
+                        duration: pauseAfterRound,
+                        inhale: false,
+                        onDone: resolve
+                    });
+                }),
+                // Timer countdown
+                (async () => {
+                    for (let i = pauseAfterRound; i > 0; i--) {
+                        if (stopRequested) break;
+                        timerDisplay.textContent = displayTime(i);
+                        await sleep(1000);
+                    }
+                })()
+            ]);
+
             hideTimer();
         }
 

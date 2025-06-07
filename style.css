@@ -53,3 +53,10 @@ body {
     right: 1rem;
     user-select: none;
 }
+
+#breathCircle {
+    display: block;
+    margin: 0 auto 20px auto;
+    background: #e3f2fd;
+    border-radius: 50%;
+}
