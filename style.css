@@ -1,6 +1,6 @@
 @media (prefers-color-scheme: dark) {
     :root {
-        --bs-dark-rgb: 18, 18, 18;
+        --bs-dark-rgb: 0, 0, 0;
         --bs-bg-opacity: 1;
     }
 
