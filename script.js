@@ -398,10 +398,10 @@ async function runBreathing() {
             }),
             // Timer and beep loop
             (async () => {
+                playBeep(inhaleFreq, 200);
                 for (let i = deepBreathTime; i > 0; i--) {
                     if (stopRequested) break;
                     timerDisplay.textContent = displayTime(i);
-                    playBeep(inhaleFreq, 200);
                     await sleep(1000);
                 }
             })()
