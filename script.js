@@ -1,70 +1,5 @@
+// --- Wake Lock ---
 let wakeLock = null;
-let paused = false;
-let pauseResolve = null;
-let DEFAULTS = {};
-
-async function loadDefaults() {
-    const stored = localStorage.getItem('wimhof_settings');
-
-    if (stored) {
-        DEFAULTS = JSON.parse(stored);
-    } else {
-        const resp = await fetch('./settings.defaults.json');
-        DEFAULTS = await resp.json();
-    }
-}
-
-function saveDefaultsToLocalStorage() {
-    const settings = {
-        prepTime: parseInt(document.getElementById('prepTime').value, 10),
-        rounds: parseInt(document.getElementById('rounds').value, 10),
-        breathSpeed: parseFloat(document.getElementById('breathSpeed').value),
-        numBreaths: parseInt(document.getElementById('numBreaths').value, 10),
-        breathOutHold: parseInt(document.getElementById('breathOutHold').value, 10),
-        holdTime: parseInt(document.getElementById('holdTime').value, 10),
-        deepBreathTime: parseInt(document.getElementById('deepBreathTime').value, 10),
-        pauseAfterRound: parseInt(document.getElementById('pauseAfterRound').value, 10),
-        customRounds: Array.from(customRounds.entries()).map(([round, time]) => ({ round, time }))
-    };
-
-    localStorage.setItem('wimhof_settings', JSON.stringify(settings));
-}
-
-[
-    'prepTime', 'rounds', 'breathSpeed', 'numBreaths',
-    'breathOutHold', 'holdTime', 'deepBreathTime', 'pauseAfterRound'
-].forEach(id => {
-    document.getElementById(id).addEventListener('input', saveDefaultsToLocalStorage);
-});
-
-function getDefault(key) {
-    return DEFAULTS[key];
-}
-
-async function initializeSettingsForm() {
-    await loadDefaults();
-    document.getElementById('prepTime').value = getDefault('prepTime');
-    document.getElementById('rounds').value = getDefault('rounds');
-    document.getElementById('breathSpeed').value = getDefault('breathSpeed');
-    document.getElementById('numBreaths').value = getDefault('numBreaths');
-    document.getElementById('breathOutHold').value = getDefault('breathOutHold');
-    document.getElementById('holdTime').value = getDefault('holdTime');
-    document.getElementById('deepBreathTime').value = getDefault('deepBreathTime');
-    document.getElementById('pauseAfterRound').value = getDefault('pauseAfterRound');
-
-    // Set up customRounds from defaults
-    customRounds.clear();
-    if (Array.isArray(DEFAULTS.customRounds)) {
-        DEFAULTS.customRounds.forEach(({ round, time }) => {
-            customRounds.set(round, time);
-        });
-    }
-    renderCustomRounds();
-}
-
-// Call this before any code that reads input values
-initializeSettingsForm();
-
 async function requestWakeLock() {
     try {
         if ('wakeLock' in navigator) {
@@ -78,7 +13,6 @@ async function requestWakeLock() {
         console.error(`${err.name}, ${err.message}`);
     }
 }
-
 function releaseWakeLock() {
     if (wakeLock) {
         wakeLock.release();
@@ -86,104 +20,147 @@ function releaseWakeLock() {
     }
 }
 
-// Helper sleep function
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-// Beep using Web Audio API
-function playBeep(freq, duration) {
-    try {
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        const oscillator = audioCtx.createOscillator();
-        const gainNode = audioCtx.createGain();
-
-        oscillator.frequency.value = freq;
-        oscillator.type = 'sine';
-
-        oscillator.connect(gainNode);
-        gainNode.connect(audioCtx.destination);
-
-        oscillator.start();
-
-        gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + duration / 1000);
-
-        oscillator.stop(audioCtx.currentTime + duration / 1000);
-
-        setTimeout(() => audioCtx.close(), duration + 50);
-    } catch {
-        // AudioContext might be blocked or unavailable
+// --- Settings Defaults ---
+let DEFAULTS = {};
+async function loadDefaults() {
+    const stored = localStorage.getItem('wimhof_settings');
+    if (stored) {
+        DEFAULTS = JSON.parse(stored);
+    } else {
+        const resp = await fetch('./settings.defaults.json');
+        DEFAULTS = await resp.json();
     }
 }
+function getDefault(key) {
+    return DEFAULTS[key];
+}
+function saveDefaultsToLocalStorage() {
+    const settings = {
+        prepTime: parseInt(document.getElementById('prepTime').value, 10),
+        rounds: parseInt(document.getElementById('rounds').value, 10),
+        breathSpeed: parseFloat(document.getElementById('breathSpeed').value),
+        numBreaths: parseInt(document.getElementById('numBreaths').value, 10),
+        breathOutHold: parseInt(document.getElementById('breathOutHold').value, 10),
+        holdTime: parseInt(document.getElementById('holdTime').value, 10),
+        deepBreathTime: parseInt(document.getElementById('deepBreathTime').value, 10),
+        pauseAfterRound: parseInt(document.getElementById('pauseAfterRound').value, 10),
+        customRounds: Array.from(customRounds.entries()).map(([round, time]) => ({ round, time }))
+    };
+    localStorage.setItem('wimhof_settings', JSON.stringify(settings));
+}
 
-// Elements
-const inputs = [
-    'prepTime', 'rounds', '', 'numBreaths',
+// --- Elements ---
+const inputIds = [
+    'prepTime', 'rounds', 'breathSpeed', 'numBreaths',
     'breathOutHold', 'holdTime', 'deepBreathTime', 'pauseAfterRound'
-].map(id => document.getElementById(id));
+];
+const [
+    customRoundNumberInput,
+    customRoundTimeInput,
+    addCustomRoundBtn,
+    customRoundsList,
+    maxCustomRoundsText,
+    startBtnSimple,
+    pauseBtnSimple,
+    stopBtnSimple,
+    settingsForm,
+    settingsToggle,
+    simpleControls,
+    phaseDisplay,
+    timerDisplay,
+    restoreDefaultsBtn
+] = [
+    document.getElementById('customRoundNumberInput'),
+    document.getElementById('customRoundTimeInput'),
+    document.getElementById('addCustomRoundBtn'),
+    document.getElementById('customRoundsList'),
+    document.getElementById('maxCustomRoundsText'),
+    document.getElementById('startBtnSimple'),
+    document.getElementById('pauseBtnSimple'),
+    document.getElementById('stopBtnSimple'),
+    document.getElementById('settingsForm'),
+    document.getElementById('settingsToggle'),
+    document.getElementById('simpleControls'),
+    document.getElementById('phaseDisplay'),
+    document.getElementById('timerDisplay'),
+    document.getElementById('restoreDefaultsBtn')
+];
 
-const customRoundNumberInput = document.getElementById('customRoundNumberInput');
-const customRoundTimeInput = document.getElementById('customRoundTimeInput');
-const addCustomRoundBtn = document.getElementById('addCustomRoundBtn');
-const customRoundsList = document.getElementById('customRoundsList');
-const maxCustomRoundsText = document.getElementById('maxCustomRoundsText');
-
-// Simple controls buttons
-const startBtnSimple = document.getElementById('startBtnSimple');
-const pauseBtnSimple = document.getElementById('pauseBtnSimple');
-const stopBtnSimple = document.getElementById('stopBtnSimple');
-
-const settingsForm = document.getElementById('settingsForm');
-const settingsToggle = document.getElementById('settingsToggle');
-const simpleControls = document.getElementById('simpleControls');
-
-const phaseDisplay = document.getElementById('phaseDisplay');
-const timerDisplay = document.getElementById('timerDisplay');
-
+// --- State ---
 let stopRequested = false;
 let running = false;
+let paused = false;
+let pauseResolve = null;
+let settingsVisible = false;
+let customRounds = new Map();
 
-// Frequencies for sounds
+// --- Sound Frequencies ---
 const inhaleFreq = 440;
 const exhaleFreq = 330;
 const holdFreq = 220;
 const roundEndFreq = 550;
 const prepBeepFreq = 660;
 
-pauseBtnSimple.addEventListener('click', () => {
-    if (!paused) {
-        paused = true;
-        pauseBtnSimple.textContent = 'Resume';
-        phaseDisplay.textContent = 'Paused';
-    } else {
-        paused = false;
-        pauseBtnSimple.textContent = 'Pause';
-        if (pauseResolve) pauseResolve();
-    }
-});
-
-async function checkPaused() {
-    if (paused) {
-        await new Promise(resolve => pauseResolve = resolve);
-        pauseResolve = null;
+// --- Utility Functions ---
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+function playBeep(freq, duration) {
+    try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const oscillator = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        oscillator.frequency.value = freq;
+        oscillator.type = 'sine';
+        oscillator.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        oscillator.start();
+        gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + duration / 1000);
+        oscillator.stop(audioCtx.currentTime + duration / 1000);
+        setTimeout(() => audioCtx.close(), duration + 50);
+    } catch {
+        // AudioContext might be blocked or unavailable
     }
 }
+function displayTime(seconds) {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return m > 0 ? `${m}:${s.toString().padStart(2, '0')}` : s.toString();
+}
+function showTimer() {
+    timerDisplay.style.display = 'block';
+}
+function hideTimer() {
+    timerDisplay.style.display = 'none';
+}
 
-// Store custom rounds in Map: roundNumber -> holdTime
-let customRounds = new Map();
+// --- Settings Form Initialization ---
+async function initializeSettingsForm() {
+    await loadDefaults();
+    inputIds.forEach(id => {
+        document.getElementById(id).value = getDefault(id);
+    });
+    // Set up customRounds from defaults
+    customRounds.clear();
+    if (Array.isArray(DEFAULTS.customRounds)) {
+        DEFAULTS.customRounds.forEach(({ round, time }) => {
+            customRounds.set(round, time);
+        });
+    }
+    renderCustomRounds();
+}
 
-// Update max custom rounds text
+// --- Custom Rounds ---
 function updateMaxCustomRoundsText() {
     const rounds = parseInt(document.getElementById('rounds').value, 10) || 1;
     maxCustomRoundsText.textContent = (rounds - 1) > 0 ? (rounds - 1) : 0;
 }
-
-// Render custom rounds list
 function renderCustomRounds() {
     customRoundsList.innerHTML = '';
     if (customRounds.size === 0) {
         customRoundsList.innerHTML = '<li class="list-group-item text-muted">No custom rounds added</li>';
+        saveDefaultsToLocalStorage();
         return;
     }
     [...customRounds.entries()]
@@ -205,7 +182,30 @@ function renderCustomRounds() {
     saveDefaultsToLocalStorage();
 }
 
-// Add custom round handler
+// --- Pause Logic ---
+pauseBtnSimple.addEventListener('click', () => {
+    if (!paused) {
+        paused = true;
+        pauseBtnSimple.textContent = 'Resume';
+        phaseDisplay.textContent = 'Paused';
+    } else {
+        paused = false;
+        pauseBtnSimple.textContent = 'Pause';
+        phaseDisplay.textContent = 'Resumed';
+        if (pauseResolve) pauseResolve();
+    }
+});
+async function checkPaused() {
+    if (paused) {
+        await new Promise(resolve => pauseResolve = resolve);
+        pauseResolve = null;
+    }
+}
+
+// --- Event Listeners ---
+inputIds.forEach(id => {
+    document.getElementById(id).addEventListener('input', saveDefaultsToLocalStorage);
+});
 addCustomRoundBtn.addEventListener('click', () => {
     const round = parseInt(customRoundNumberInput.value, 10);
     const time = parseInt(customRoundTimeInput.value, 10);
@@ -223,61 +223,50 @@ addCustomRoundBtn.addEventListener('click', () => {
         alert(`Custom hold time for Round ${round} is already set. Remove it first to add a new one.`);
         return;
     }
-    // Max custom rounds allowed: rounds - 1
     if (customRounds.size >= maxRounds - 1) {
         alert(`You can only set custom hold times for up to ${maxRounds - 1} rounds.`);
         return;
     }
-
     customRounds.set(round, time);
     renderCustomRounds();
     saveDefaultsToLocalStorage();
-
     customRoundNumberInput.value = '';
     customRoundTimeInput.value = '';
 });
-
-// Update max custom rounds text on rounds input change
-document.getElementById('rounds').addEventListener('input', () => {
-    updateMaxCustomRoundsText();
-});
-
-// Settings toggle button
-let settingsVisible = false;
+document.getElementById('rounds').addEventListener('input', updateMaxCustomRoundsText);
 settingsToggle.addEventListener('click', () => {
     settingsVisible = !settingsVisible;
     if (settingsVisible) {
         settingsForm.style.display = 'block';
         settingsToggle.innerHTML = '&#10006;'; // X icon
-        simpleControls.style.display = 'none'; // Hide simple controls when settings shown
+        simpleControls.style.display = 'none';
     } else {
         settingsForm.style.display = 'none';
         settingsToggle.innerHTML = '&#9881;'; // Gear icon
         simpleControls.style.display = 'flex';
     }
 });
+restoreDefaultsBtn.addEventListener('click', async () => {
+    localStorage.removeItem('wimhof_settings');
+    await initializeSettingsForm();
+});
 
-// Initialize max custom rounds text
+// --- UI State ---
+function resetUI() {
+    pauseBtnSimple.disabled = true;
+    pauseBtnSimple.textContent = 'Pause';
+    paused = false;
+    running = false;
+    stopRequested = false;
+    releaseWakeLock();
+    startBtnSimple.disabled = false;
+    stopBtnSimple.disabled = true;
+    hideTimer();
+    timerDisplay.textContent = '';
+}
 updateMaxCustomRoundsText();
 
-// Timer display helper
-function displayTime(seconds) {
-    const m = Math.floor(seconds / 60);
-    const s = seconds % 60;
-    return m > 0 ? `${m}:${s.toString().padStart(2, '0')}` : s.toString();
-}
-
-// Show timer display
-function showTimer() {
-    timerDisplay.style.display = 'block';
-}
-
-// Hide timer display
-function hideTimer() {
-    timerDisplay.style.display = 'none';
-}
-
-// Main async breathing loop
+// --- Main Breathing Logic ---
 async function runBreathing() {
     stopRequested = false;
     running = true;
@@ -395,74 +384,42 @@ async function runBreathing() {
         hideTimer();
         if (stopRequested) break;
 
-        // Pause after round except after last
-        if (round !== totalRounds) {
-            phaseDisplay.textContent = `Round ${round} - Breath out`;
-            showTimer();
+        // Let it go
+        phaseDisplay.textContent = `Round ${round} - Breath out`;
+        showTimer();
 
-            // Run timer and exhale animation in parallel
-            await Promise.all([
-                // Animate exhale (shrinking) during pause
-                new Promise(resolve => {
-                    window.animateBreath({
-                        duration: pauseAfterRound,
-                        inhale: false,
-                        onDone: resolve
-                    });
-                }),
-                // Timer countdown
-                (async () => {
-                    for (let i = pauseAfterRound; i > 0; i--) {
-                        if (stopRequested) break;
-                        timerDisplay.textContent = displayTime(i);
-                        await sleep(1000);
-                    }
-                })()
-            ]);
+        // Run timer and exhale animation in parallel
+        await Promise.all([
+            new Promise(resolve => {
+                window.animateBreath({
+                    duration: pauseAfterRound,
+                    inhale: false,
+                    onDone: resolve
+                });
+            }),
+            (async () => {
+                for (let i = pauseAfterRound; i > 0; i--) {
+                    if (stopRequested) break;
+                    timerDisplay.textContent = displayTime(i);
+                    await sleep(1000);
+                }
+            })()
+        ]);
 
-            hideTimer();
-        }
-
+        hideTimer();
         playBeep(roundEndFreq, 300);
     }
 
     phaseDisplay.textContent = 'Finished!';
     hideTimer();
     timerDisplay.textContent = '';
-
     resetUI();
 }
 
-// Reset UI to initial state
-function resetUI() {
-    pauseBtnSimple.disabled = true;
-    pauseBtnSimple.textContent = 'Pause';
-    paused = false;
-
-    running = false;
-    stopRequested = false;
-    releaseWakeLock();
-    startBtnSimple.disabled = false;
-    stopBtnSimple.disabled = true;
-    hideTimer();
-    timerDisplay.textContent = '';
-}
-
-const restoreDefaultsBtn = document.getElementById('restoreDefaultsBtn');
-
-restoreDefaultsBtn.addEventListener('click', async () => {
-    // Remove user settings from localStorage
-    localStorage.removeItem('wimhof_settings');
-    // Reload defaults from JSON and update form/UI
-    await initializeSettingsForm();
-});
-
+// --- Controls ---
 startBtnSimple.addEventListener('click', () => {
-    if (!running) {
-        runBreathing();
-    }
+    if (!running) runBreathing();
 });
-
 stopBtnSimple.addEventListener('click', () => {
     if (running) {
         stopRequested = true;
@@ -470,5 +427,6 @@ stopBtnSimple.addEventListener('click', () => {
     }
 });
 
-// Initialize UI
+// --- Init ---
+initializeSettingsForm();
 resetUI();
