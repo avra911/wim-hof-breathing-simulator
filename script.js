@@ -458,6 +458,7 @@ stopBtnSimple.addEventListener('click', () => {
         stopRequested = true;
         phaseDisplay.textContent = 'Stopping...';
     }
+    phaseDisplay.textContent = 'Stopped!';
 });
 
 // --- Init ---
