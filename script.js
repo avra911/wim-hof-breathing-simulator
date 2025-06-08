@@ -70,21 +70,21 @@ const [
     timerDisplay,
     restoreDefaultsBtn
 ] = [
-    document.getElementById('customRoundNumberInput'),
-    document.getElementById('customRoundTimeInput'),
-    document.getElementById('addCustomRoundBtn'),
-    document.getElementById('customRoundsList'),
-    document.getElementById('maxCustomRoundsText'),
-    document.getElementById('startBtnSimple'),
-    document.getElementById('pauseBtnSimple'),
-    document.getElementById('stopBtnSimple'),
-    document.getElementById('settingsForm'),
-    document.getElementById('settingsToggle'),
-    document.getElementById('simpleControls'),
-    document.getElementById('phaseDisplay'),
-    document.getElementById('timerDisplay'),
-    document.getElementById('restoreDefaultsBtn')
-];
+        document.getElementById('customRoundNumberInput'),
+        document.getElementById('customRoundTimeInput'),
+        document.getElementById('addCustomRoundBtn'),
+        document.getElementById('customRoundsList'),
+        document.getElementById('maxCustomRoundsText'),
+        document.getElementById('startBtnSimple'),
+        document.getElementById('pauseBtnSimple'),
+        document.getElementById('stopBtnSimple'),
+        document.getElementById('settingsForm'),
+        document.getElementById('settingsToggle'),
+        document.getElementById('simpleControls'),
+        document.getElementById('phaseDisplay'),
+        document.getElementById('timerDisplay'),
+        document.getElementById('restoreDefaultsBtn')
+    ];
 
 // --- State ---
 let stopRequested = false;
@@ -249,6 +249,30 @@ settingsToggle.addEventListener('click', () => {
 restoreDefaultsBtn.addEventListener('click', async () => {
     localStorage.removeItem('wimhof_settings');
     await initializeSettingsForm();
+});
+document.addEventListener('visibilitychange', async () => {
+    if (!running) return;
+
+    if (document.visibilityState === 'visible') {
+        try {
+            if (!wakeLock && 'wakeLock' in navigator) {
+                wakeLock = await navigator.wakeLock.request('screen');
+                console.log('Wake Lock re-acquired on visibility');
+                wakeLock.addEventListener('release', () => {
+                    console.log('Wake Lock released');
+                    wakeLock = null;
+                });
+            }
+        } catch (err) {
+            console.error('Failed to re-acquire Wake Lock:', err);
+        }
+    } else {
+        if (wakeLock) {
+            await wakeLock.release();
+            wakeLock = null;
+            console.log('Wake Lock released because tab is hidden');
+        }
+    }
 });
 
 // --- UI State ---
