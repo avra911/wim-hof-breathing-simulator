@@ -432,6 +432,7 @@ async function runBreathing() {
                 });
             }),
             (async () => {
+                playBeep(inhaleFreq, 200);
                 for (let i = pauseAfterRound; i > 0; i--) {
                     if (stopRequested) break;
                     timerDisplay.textContent = displayTime(i);
