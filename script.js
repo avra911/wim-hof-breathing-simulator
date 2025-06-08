@@ -65,6 +65,7 @@ const [
     stopBtnSimple,
     settingsForm,
     settingsToggle,
+    contentWrapper,
     simpleControls,
     phaseDisplay,
     timerDisplay,
@@ -80,6 +81,7 @@ const [
         document.getElementById('stopBtnSimple'),
         document.getElementById('settingsForm'),
         document.getElementById('settingsToggle'),
+        document.getElementById('contentWrapper'),
         document.getElementById('simpleControls'),
         document.getElementById('phaseDisplay'),
         document.getElementById('timerDisplay'),
@@ -239,13 +241,11 @@ settingsToggle.addEventListener('click', () => {
     if (settingsVisible) {
         settingsForm.style.display = 'block';
         settingsToggle.innerHTML = '&#10006;'; // X icon
-        simpleControls.style.setProperty('display', 'none', 'important');
-        breathCircle.style.setProperty('display', 'none', 'important');
+        contentWrapper.style.setProperty('display', 'none');
     } else {
         settingsForm.style.display = 'none';
         settingsToggle.innerHTML = '&#9881;'; // Gear icon
-        simpleControls.style.setProperty('display', 'flex');
-        breathCircle.style.setProperty('display', 'flex');
+        contentWrapper.style.setProperty('display', 'block');
     }
 });
 restoreDefaultsBtn.addEventListener('click', async () => {

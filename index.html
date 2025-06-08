@@ -103,17 +103,19 @@
     </div>
   </form>
 
-  <!-- Simple controls always visible -->
-  <div id="simpleControls" class="d-flex justify-content-center gap-3 mb-3">
-    <button type="button" id="startBtnSimple" class="btn btn-primary">Start</button>
-    <button type="button" id="pauseBtnSimple" class="btn btn-warning" disabled>Pause</button>
-    <button type="button" id="stopBtnSimple" class="btn btn-danger" disabled>Stop</button>
+  <div id="contentWrapper">
+    <!-- Simple controls always visible -->
+    <div id="simpleControls" class="d-flex justify-content-center gap-3 mb-3">
+      <button type="button" id="startBtnSimple" class="btn btn-primary">Start</button>
+      <button type="button" id="pauseBtnSimple" class="btn btn-warning" disabled>Pause</button>
+      <button type="button" id="stopBtnSimple" class="btn btn-danger" disabled>Stop</button>
+    </div>
+
+    <canvas id="breathCircle" width="300" height="300"></canvas>
+
+    <div id="phaseDisplay" class="text-center mt-4"></div>
+    <div id="timerDisplay" class="text-center"></div>
   </div>
-
-  <canvas id="breathCircle" width="300" height="300"></canvas>
-
-  <div id="phaseDisplay" class="text-center mt-4"></div>
-  <div id="timerDisplay" class="text-center"></div>
 
   <footer class="text-center text-sm text-gray-500 mt-6 mb-4">
     Made with ❤️ in EU · <a href="https://github.com/avra911/wim-hof-breathing-simulator" target="_blank" class="underline hover:text-blue-500">GitHub Repo</a><br>
