@@ -331,7 +331,7 @@ async function runBreathing() {
         if (stopRequested) break;
 
         // Breathing phase: numBreaths cycles inhale/exhale
-        phaseDisplay.textContent = `Round ${round} - Breathing`;
+        phaseDisplay.textContent = `Round ${round}`;
 
         for (let breath = 1; breath <= numBreaths; breath++) {
             await checkPaused();
@@ -339,7 +339,7 @@ async function runBreathing() {
             if (stopRequested) break;
 
             // Inhale
-            phaseDisplay.textContent = `Round ${round} - Breath ${breath} Inhale`;
+            phaseDisplay.textContent = `Round ${round} - Breath In (${breath}/${numBreaths})`;
             timerDisplay.textContent = displayTime(breathSpeed);
             playBeep(inhaleFreq, 200);
             await new Promise(resolve => {
@@ -352,7 +352,7 @@ async function runBreathing() {
             if (stopRequested) break;
 
             // Exhale
-            phaseDisplay.textContent = `Round ${round} - Breath ${breath} Exhale`;
+            phaseDisplay.textContent = `Round ${round} - Breath Out (${breath}/${numBreaths})`;
             timerDisplay.textContent = displayTime(breathSpeed);
             playBeep(exhaleFreq, 200);
             await new Promise(resolve => {
@@ -367,7 +367,7 @@ async function runBreathing() {
 
         // Hold after breath out
         let holdAfterBreathOut = customRounds.has(round) ? customRounds.get(round) : breathOutHold;
-        phaseDisplay.textContent = `Round ${round} - Hold after breath out`;
+        phaseDisplay.textContent = `Round ${round} - HOLD`;
         showTimer();
 
         pauseBtnSimple.disabled = false;
@@ -383,7 +383,7 @@ async function runBreathing() {
         if (stopRequested) break;
 
         // Deep breath in
-        phaseDisplay.textContent = `Round ${round} - Deep Breath Inhale`;
+        phaseDisplay.textContent = `Round ${round} - Fully In`;
         timerDisplay.textContent = displayTime(deepBreathTime);
         playBeep(inhaleFreq, 200);
         await new Promise(resolve => {
@@ -397,7 +397,7 @@ async function runBreathing() {
         if (stopRequested) break;
 
         // Hold after deep breath
-        phaseDisplay.textContent = `Round ${round} - Hold after Deep Breath`;
+        phaseDisplay.textContent = `Round ${round} - HOLD`;
         showTimer();
         for (let i = holdTime; i > 0; i--) {
             if (stopRequested) break;
@@ -409,7 +409,7 @@ async function runBreathing() {
         if (stopRequested) break;
 
         // Let it go
-        phaseDisplay.textContent = `Round ${round} - Breath out`;
+        phaseDisplay.textContent = `Round ${round} - Let Go`;
         showTimer();
 
         // Run timer and exhale animation in parallel
