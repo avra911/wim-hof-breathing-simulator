@@ -5,7 +5,7 @@
   "numBreaths": 30,
   "breathOutHold": 90,
   "holdTime": 15,
-  "deepBreathTime": 4,
+  "deepBreathTime": 3,
   "pauseAfterRound": 7,
   "customRounds": [
     {
