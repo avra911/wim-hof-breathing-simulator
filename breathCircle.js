@@ -20,8 +20,8 @@ function drawCircle(scale = 1) {
 function animateBreath({duration, inhale = true, onDone}) {
     animating = true;
     const start = performance.now();
-    const startScale = inhale ? 0.5 : 1.0;
-    const endScale = inhale ? 1.0 : 0.5;
+    const startScale = inhale ? 0.20 : 1.0;
+    const endScale = inhale ? 1.0 : 0.20;
 
     function animate(now) {
         if (!animating) return;
@@ -41,11 +41,11 @@ function animateBreath({duration, inhale = true, onDone}) {
 function stopBreathAnimation() {
     animating = false;
     cancelAnimationFrame(animationFrame);
-    drawCircle(0.5); // Reset to small
+    drawCircle(0.2); // Reset to small
 }
 
 // Draw initial state
-drawCircle(0.5);
+drawCircle(0.2);
 
 // Expose functions globally
 window.animateBreath = animateBreath;

@@ -1,7 +1,7 @@
 {
   "prepTime": 10,
   "rounds": 3,
-  "breathSpeed": 2.5,
+  "breathSpeed": 1.55,
   "numBreaths": 30,
   "breathOutHold": 90,
   "holdTime": 15,

@@ -239,11 +239,13 @@ settingsToggle.addEventListener('click', () => {
     if (settingsVisible) {
         settingsForm.style.display = 'block';
         settingsToggle.innerHTML = '&#10006;'; // X icon
-        simpleControls.style.display = 'none';
+        simpleControls.style.setProperty('display', 'none', 'important');
+        breathCircle.style.setProperty('display', 'none', 'important');
     } else {
         settingsForm.style.display = 'none';
         settingsToggle.innerHTML = '&#9881;'; // Gear icon
-        simpleControls.style.display = 'flex';
+        simpleControls.style.setProperty('display', 'flex');
+        breathCircle.style.setProperty('display', 'flex');
     }
 });
 restoreDefaultsBtn.addEventListener('click', async () => {
@@ -299,7 +301,7 @@ async function runBreathing() {
 
     const prepTime = parseInt(document.getElementById('prepTime').value, 10) || getDefault('prepTime');
     const totalRounds = parseInt(document.getElementById('rounds').value, 10) || getDefault('rounds');
-    const breathSpeed = parseInt(document.getElementById('breathSpeed').value, 10) || getDefault('breathSpeed');
+    const breathSpeed = parseFloat(document.getElementById('breathSpeed').value) || getDefault('breathSpeed');
     const numBreaths = parseInt(document.getElementById('numBreaths').value, 10) || getDefault('numBreaths');
     const breathOutHold = parseInt(document.getElementById('breathOutHold').value, 10) || getDefault('breathOutHold');
     const holdTime = parseInt(document.getElementById('holdTime').value, 10) || getDefault('holdTime');
