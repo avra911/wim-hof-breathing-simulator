@@ -340,8 +340,10 @@ async function runBreathing() {
             hideTimer();
             if (stopRequested) break;
 
+            const breathsLeft = numBreaths - breath + 1;
+
             // Inhale
-            phaseDisplay.textContent = `Round ${round}/${totalRounds} - In ${numBreaths - breath + 1}`;
+            phaseDisplay.textContent = `Round ${round}/${totalRounds} - In ${breathsLeft}`;
             timerDisplay.textContent = displayTime(breathSpeed);
             playBeep(inhaleFreq, 200);
             await new Promise(resolve => {
@@ -354,7 +356,7 @@ async function runBreathing() {
             if (stopRequested) break;
 
             // Exhale
-            phaseDisplay.textContent = `Round ${round}/${totalRounds} - Out ${numBreaths - breath + 1}`;
+            phaseDisplay.textContent = `Round ${round}/${totalRounds} - Out ${breathsLeft}`;
             timerDisplay.textContent = displayTime(breathSpeed);
             playBeep(exhaleFreq, 200);
             await new Promise(resolve => {
