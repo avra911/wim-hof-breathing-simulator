@@ -3,8 +3,6 @@
   "short_name": "WHBS",
   "start_url": ".",
   "display": "fullscreen",
-  "background_color": "#000000",
-  "theme_color": "#000000",
   "orientation": "portrait",
   "description": "A breathing exercise simulator to help you relax.",
   "icons": [
