@@ -39,6 +39,11 @@
     }
 }
 
+html, body {
+    background-color: #ffffff;
+    color: #000000;
+}
+
 body {
     padding: 2rem;
     max-width: 600px;
