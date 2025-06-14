@@ -9,6 +9,10 @@
         color: #ffffff;
     }
 
+    #breathCircle {
+        background: #121212 !important;
+    }
+
     body {
         padding-top: env(safe-area-inset-top);
         padding-bottom: env(safe-area-inset-bottom);
@@ -67,6 +71,6 @@ body {
 #breathCircle {
     display: block;
     margin: 0 auto 20px auto;
-    background: #121212;
+    background: #eaeaea;
     border-radius: 50%;
 }
