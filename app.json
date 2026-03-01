@@ -38,6 +38,8 @@
       "bundler": "metro",
       "output": "single",
       "themeColor": "#000000",
+      "display": "standalone",
+      "statusBarStyle": "black-translucent",
       "backgroundColor": "#000000"
     },
     "plugins": [
@@ -53,7 +55,7 @@
     "owner": "same-zen-bodys-organization",
     "extra": {
       "eas": {
-        "projectId": "c884f6b9-bce6-42bb-b7ea-3fdbe517ec8c"
+        "projectId": "e3c731b7-4505-4ee4-8e16-e0f80270081d"
       }
     }
   }

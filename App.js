@@ -20,7 +20,7 @@ export default function App() {
   useEffect(() => {
     const loadSettings = async () => {
       try {
-        const saved = await AsyncStorage.getItem('wimhof_settings');
+        const saved = await AsyncStorage.getItem('innerfire_settings');
         if (saved) setSettings(JSON.parse(saved));
       } catch (e) {
         console.log('Error loading settings', e);
@@ -31,7 +31,7 @@ export default function App() {
 
   // Salvăm setările automat când se modifică
   useEffect(() => {
-    AsyncStorage.setItem('wimhof_settings', JSON.stringify(settings));
+    AsyncStorage.setItem('innerfire_settings', JSON.stringify(settings));
   }, [settings]);
 
   const { phase, timerText, scaleAnim, progress, isRunning, isPaused, canPause, start, pause, resume, stop, currentRound } = useBreathing(settings);

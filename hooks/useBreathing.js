@@ -119,10 +119,10 @@ export function useBreathing(settings = DEFAULT_SETTINGS) {
         try {
           const date = new Date().toISOString().split('T')[0]; // ex: 2026-03-01
           const record = { date, round, time: currentHoldTime };
-          const existing = await AsyncStorage.getItem('wimhof_history');
+          const existing = await AsyncStorage.getItem('innerfire_history');
           const history = existing ? JSON.parse(existing) : [];
           history.push(record);
-          await AsyncStorage.setItem('wimhof_history', JSON.stringify(history));
+          await AsyncStorage.setItem('innerfire_history', JSON.stringify(history));
         } catch(e) { console.log('Eroare la salvare istoric', e); }
       }
       // --------------------------------------------------------

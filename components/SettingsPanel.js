@@ -142,7 +142,7 @@ export default function SettingsPanel({ visible, settings, setSettings, onClose 
               {t('footer.madeWith')}
               <Text 
                 style={styles.linkText} 
-                onPress={() => Linking.openURL('https://github.com/avra911/wim-hof-breathing-simulator')}
+                onPress={() => Linking.openURL('https://github.com/avra911/inner-fire-breathing-simulator')}
               >
                 {t('footer.githubRepo')}
               </Text>
