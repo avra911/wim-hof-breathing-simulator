@@ -35,7 +35,7 @@
     <!-- The root element for your Expo app. -->
     <div id="root"></div>
     <script>
-      if ('serviceWorker' in navigator) {
+      if ('serviceWorker' in navigator && window.location.hostname !== 'localhost') {
         window.addEventListener('load', () => {
           // Înregistrăm service worker-ul relativ la directorul curent
           navigator.serviceWorker.register('./sw.js').then(registration => {
