@@ -1,0 +1,44 @@
+{
+  "app": { "title": "内在之火", "subtitle": "呼吸" },
+  "startSession": "开始",
+  "pause": "暂停",
+  "resume": "继续",
+  "stop": "停止",
+  "settings": { "title": "设置", "customRounds": "自定义回合" },
+  "inputs": {
+    "prepTime": "准备时间 (秒)",
+    "rounds": "回合数",
+    "breathSpeed": "呼吸速度 (秒)",
+    "numBreaths": "呼吸次数 / 回合",
+    "breathOutHold": "屏息 (呼气后) (秒)",
+    "deepBreathTime": "深呼吸 (秒)",
+    "holdTime": "屏息 (吸气后) (秒)",
+    "pauseAfterRound": "回合间休息 (秒)"
+  },
+  "alerts": {
+    "roundRange": "回合必须在 1 到 %{max} 之间",
+    "timePositive": "时间必须为正数",
+    "roundExists": "第 %{round} 回合已设置时间。",
+    "maxCustomRounds": "最多可设置 %{max} 个自定义回合。"
+  },
+  "addCustomRound": "添加自定义回合",
+  "restoreDefaults": "恢复默认",
+  "customRoundLabel": "第 %{round} 回合: %{time} 秒",
+  "customRoundPlaceholderRound": "回合 #",
+  "customRoundPlaceholderTime": "时间 (秒)",
+  "footer": { "madeWith": "用 ❤️ 制作于欧盟 · ", "githubRepo": "GitHub 仓库" },
+  "donations": "捐赠:",
+  "btcWallet": "BTC 钱包",
+  "phase": {
+    "ready": "准备就绪",
+    "preparing": "准备中...",
+    "round": "回合 %{round}/%{total}",
+    "round_hold": "回合 %{round}/%{total} - 屏住呼吸",
+    "deepBreath": "深吸一口气",
+    "holdSeconds": "保持 %{seconds} 秒",
+    "letItGo": "呼气放松...",
+    "sessionComplete": "训练完成！",
+    "paused": "已暂停",
+    "resumed": "已继续"
+  }
+}
