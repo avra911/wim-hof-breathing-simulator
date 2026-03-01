@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 import { getLocales } from 'expo-localization';
 import { I18n } from 'i18n-js';
 
@@ -21,14 +22,31 @@ const i18n = new I18n({
   zh
 });
 
-// 3. Setări de fallback (dacă lipsește un cuvânt în română, îl ia din engleză)
+// 3. Setări de fallback (dacă lipsește un cuvânt, îl ia din engleză)
 i18n.enableFallback = true;
 i18n.defaultLocale = 'en';
 
-// 4. Detectăm inteligent limba telefonului
-// getLocales()[0].languageCode returnează doar primele litere (ex: 'ro' din 'ro-RO')
-const deviceLanguage = getLocales()[0].languageCode; 
-i18n.locale = 'deviceLanguage';
+// 4. Detectare blindată a limbii (Web vs. Nativ)
+let deviceLanguage = 'en';
+
+try {
+  if (Platform.OS === 'web') {
+    // Pe Web (Brave/Chrome/GitHub Pages), citim direct din browser.
+    // navigator.language returnează ex: "ro-RO" sau "en-US", noi luăm doar prima parte.
+    deviceLanguage = (navigator.language || navigator.userLanguage || 'en').split('-')[0];
+  } else {
+    // Pe Android / iOS, folosim modulul de la Expo
+    const locales = getLocales();
+    if (locales && locales.length > 0) {
+      deviceLanguage = locales[0].languageCode;
+    }
+  }
+} catch (e) {
+  console.log("Eroare la detectarea limbii:", e);
+}
+
+// Setăm limba detectată în instanța i18n
+i18n.locale = deviceLanguage;
 
 // 5. Exportăm funcția de traducere
 export function t(key, opts) {
