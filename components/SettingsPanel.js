@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Modal, View, Text, TextInput, TouchableOpacity, ScrollView, StyleSheet, SafeAreaView, Linking } from 'react-native';
 import { X, Trash2 } from 'lucide-react-native';
 import { DEFAULT_SETTINGS } from '../hooks/useBreathing';
+import { t } from '../utils/i18n';
 
 export default function SettingsPanel({ visible, settings, setSettings, onClose }) {
   const [customRoundNum, setCustomRoundNum] = useState('');
@@ -19,23 +20,23 @@ export default function SettingsPanel({ visible, settings, setSettings, onClose 
     const maxRounds = settings.rounds || 1;
 
     if (!round || round < 1 || round > maxRounds) {
-      alert(`Runda trebuie să fie între 1 și ${maxRounds}`);
+      alert(t('alerts.roundRange', { max: maxRounds }));
       return;
     }
     if (!time || time < 1) {
-      alert('Timpul trebuie să fie pozitiv');
+      alert(t('alerts.timePositive'));
       return;
     }
 
     const currentCustomRounds = settings.customRounds || [];
 
     if (currentCustomRounds.find(r => r.round === round)) {
-      alert(`Runda ${round} are deja un timp setat.`);
+      alert(t('alerts.roundExists', { round }));
       return;
     }
 
     if (currentCustomRounds.length >= maxRounds - 1 && maxRounds > 1) {
-      alert(`Poți seta maxim ${maxRounds - 1} runde personalizate.`);
+      alert(t('alerts.maxCustomRounds', { max: maxRounds - 1 }));
       return;
     }
 
@@ -49,21 +50,21 @@ export default function SettingsPanel({ visible, settings, setSettings, onClose 
   };
 
   const inputs = [
-    { name: 'prepTime', label: 'Pregătire (sec)' },
-    { name: 'rounds', label: 'Număr Runde' },
-    { name: 'breathSpeed', label: 'Viteză Respirație (sec)' },
-    { name: 'numBreaths', label: 'Respirații / Rundă' },
-    { name: 'breathOutHold', label: 'Retenție (OUT) (sec)' },
-    { name: 'deepBreathTime', label: 'Inhalare Adâncă (sec)' },
-    { name: 'holdTime', label: 'Retenție (IN) (sec)' },
-    { name: 'pauseAfterRound', label: 'Pauză între runde (sec)' },
+    { name: 'prepTime' },
+    { name: 'rounds' },
+    { name: 'breathSpeed' },
+    { name: 'numBreaths' },
+    { name: 'breathOutHold' },
+    { name: 'deepBreathTime' },
+    { name: 'holdTime' },
+    { name: 'pauseAfterRound' },
   ];
 
   return (
     <Modal visible={visible} animationType="slide" presentationStyle="pageSheet" onRequestClose={onClose}>
       <SafeAreaView style={styles.container}>
         <View style={styles.header}>
-          <Text style={styles.title}>Setări Sesiune</Text>
+          <Text style={styles.title}>{t('settings.title')}</Text>
           <TouchableOpacity onPress={onClose} style={styles.closeBtn}>
             <X color="#ffffff" size={24} />
           </TouchableOpacity>
@@ -75,7 +76,7 @@ export default function SettingsPanel({ visible, settings, setSettings, onClose 
           <View style={styles.inputGrid}>
             {inputs.map(input => (
               <View key={input.name} style={styles.inputBlock}>
-                <Text style={styles.label}>{input.label}</Text>
+                <Text style={styles.label}>{t(`inputs.${input.name}`)}</Text>
                 <TextInput
                   style={styles.input}
                   keyboardType="numeric"
@@ -90,11 +91,11 @@ export default function SettingsPanel({ visible, settings, setSettings, onClose 
           <View style={styles.divider} />
 
           {/* Runde Personalizate */}
-          <Text style={styles.sectionTitle}>Runde Personalizate</Text>
+          <Text style={styles.sectionTitle}>{t('settings.customRounds')}</Text>
           <View style={styles.customAddRow}>
             <TextInput
               style={[styles.input, { flex: 0.8, marginRight: 10 }]}
-              placeholder="Runda #"
+              placeholder={t('customRoundPlaceholderRound')}
               placeholderTextColor="#6b7280"
               keyboardType="numeric"
               value={customRoundNum}
@@ -102,7 +103,7 @@ export default function SettingsPanel({ visible, settings, setSettings, onClose 
             />
             <TextInput
               style={[styles.input, { flex: 1 }]}
-              placeholder="Timp (sec)"
+              placeholder={t('customRoundPlaceholderTime')}
               placeholderTextColor="#6b7280"
               keyboardType="numeric"
               value={customRoundTime}
@@ -110,13 +111,13 @@ export default function SettingsPanel({ visible, settings, setSettings, onClose 
             />
           </View>
           <TouchableOpacity style={styles.addBtn} onPress={handleAddCustomRound}>
-            <Text style={styles.addBtnText}>Adaugă Rundă Custom</Text>
+            <Text style={styles.addBtnText}>{t('addCustomRound')}</Text>
           </TouchableOpacity>
 
           <View style={styles.list}>
             {(settings.customRounds || []).map(cr => (
               <View key={cr.round} style={styles.listItem}>
-                <Text style={styles.listItemText}>Runda {cr.round}: {cr.time} sec</Text>
+                <Text style={styles.listItemText}>{t('customRoundLabel', { round: cr.round, time: cr.time })}</Text>
                 <TouchableOpacity
                   style={styles.removeBtn}
                   onPress={() => setSettings(prev => ({ ...prev, customRounds: prev.customRounds.filter(r => r.round !== cr.round) }))}
@@ -132,28 +133,28 @@ export default function SettingsPanel({ visible, settings, setSettings, onClose 
             style={styles.restoreBtn}
             onPress={() => setSettings(DEFAULT_SETTINGS)}
           >
-            <Text style={styles.restoreBtnText}>Restore Defaults</Text>
+            <Text style={styles.restoreBtnText}>{t('restoreDefaults')}</Text>
           </TouchableOpacity>
 
           {/* --- FOOTER: ABOUT & DONATIONS --- */}
           <View style={styles.footerContainer}>
             <Text style={styles.footerText}>
-              Made with ❤️ in EU ·{' '}
+              {t('footer.madeWith')}
               <Text 
                 style={styles.linkText} 
                 onPress={() => Linking.openURL('https://github.com/avra911/wim-hof-breathing-simulator')}
               >
-                GitHub Repo
+                {t('footer.githubRepo')}
               </Text>
             </Text>
 
             <Text style={styles.donationText}>
-              Donations:{'\n'}
+              {t('donations')}{'\n'}
               <Text 
                 style={styles.btcLink} 
                 onPress={() => Linking.openURL('bitcoin:1AvraENtvcM4odsFrFYG7N7G9nK77KXSf4')}
               >
-                BTC Wallet
+                {t('btcWallet')}
               </Text>
             </Text>
           </View>

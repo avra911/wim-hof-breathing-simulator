@@ -7,6 +7,7 @@ import { useKeepAwake } from 'expo-keep-awake';
 
 import BreathCircle from './components/BreathCircle';
 import SettingsPanel from './components/SettingsPanel';
+import { t } from './utils/i18n';
 import { useBreathing, DEFAULT_SETTINGS } from './hooks/useBreathing';
 
 export default function App() {
@@ -73,7 +74,7 @@ export default function App() {
       {/* Header Bar - Acum respectă Status Bar-ul de pe Android */}
       <View style={styles.header}>
         <Text style={styles.title}>
-          Wim Hof <Text style={[styles.titleHighlight, { color: activeColor }]}>Breath</Text>
+          {t('app.title')} <Text style={[styles.titleHighlight, { color: activeColor }]}>{t('app.subtitle')}</Text>
         </Text>
         <TouchableOpacity
           style={[styles.settingsButton, isRunning && { opacity: 0.3 }]}
@@ -97,9 +98,9 @@ export default function App() {
 
       <View style={styles.controls}>
         {!isRunning ? (
-          <TouchableOpacity style={[styles.button, styles.startButton]} onPress={start}>
+            <TouchableOpacity style={[styles.button, styles.startButton]} onPress={start}>
             <Play color="#ffffff" size={24} fill="#ffffff" />
-            <Text style={styles.buttonText}>Start Sesiune</Text>
+              <Text style={styles.buttonText}>{t('startSession')}</Text>
           </TouchableOpacity>
         ) : (
           <View style={styles.activeControls}>
@@ -110,18 +111,18 @@ export default function App() {
                 disabled={!canPause}
               >
                 <Pause color="#ffffff" size={24} fill="#ffffff" />
-                <Text style={styles.buttonText}>Pauză</Text>
+                <Text style={styles.buttonText}>{t('pause')}</Text>
               </TouchableOpacity>
             ) : (
               <TouchableOpacity style={[styles.button, styles.resumeButton]} onPress={resume}>
                 <Play color="#ffffff" size={24} fill="#ffffff" />
-                <Text style={styles.buttonText}>Continuă</Text>
+                <Text style={styles.buttonText}>{t('resume')}</Text>
               </TouchableOpacity>
             )}
 
             <TouchableOpacity style={[styles.button, styles.stopButton]} onPress={stop}>
               <Square color="#ffffff" size={24} fill="#ffffff" />
-              <Text style={styles.buttonText}>Stop</Text>
+              <Text style={styles.buttonText}>{t('stop')}</Text>
             </TouchableOpacity>
           </View>
         )}

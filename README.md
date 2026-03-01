@@ -1,8 +1,8 @@
 # 🧊 Advanced Breathing Simulator
 
-An immersive, interactive breathing exercise simulator inspired by the Wim Hof Method and traditional Tummo breathing. Built from the ground up with **React Native & Expo**, featuring beautiful animated graphics, dynamic color themes, haptic feedback, and full offline capabilities.
+An immersive, interactive breathing exercise simulator inspired by the inner fire Method and traditional Tummo breathing. Built from the ground up with **React Native & Expo**, featuring beautiful animated graphics, dynamic color themes, haptic feedback, and full offline capabilities.
 
-[![Live Demo](https://img.shields.io/badge/Demo-Live_on_GitHub_Pages-success?style=for-the-badge)](https://avra911.github.io/wim-hof-breathing-simulator/)
+[![Live Demo](https://img.shields.io/badge/Demo-Live_on_GitHub_Pages-success?style=for-the-badge)](https://avra911.github.io/inner-fire-breathing-simulator/)
 
 ## ✨ Key Features
 
@@ -19,7 +19,7 @@ An immersive, interactive breathing exercise simulator inspired by the Wim Hof M
 ## 🚀 Live Demo
 
 Try the app right now in your browser (Works best on mobile or a narrowed desktop window):  
-👉 **[Play Live Demo](https://avra911.github.io/wim-hof-breathing-simulator/)**
+👉 **[Play Live Demo](https://avra911.github.io/inner-fire-breathing-simulator/)**
 
 ## 💻 Installation & Local Development
 
@@ -27,8 +27,8 @@ Want to run it locally or build it for your phone?
 
 1. **Clone the repository:**
    ```bash
-   git clone [https://github.com/avra911/wim-hof-breathing-simulator.git](https://github.com/avra911/wim-hof-breathing-simulator.git)
-   cd wim-hof-breathing-simulator
+   git clone [https://github.com/avra911/inner-fire-breathing-simulator.git](https://github.com/avra911/inner-fire-breathing-simulator.git)
+   cd inner-fire-breathing-simulator
    ```
 
 2. **Install dependencies:**

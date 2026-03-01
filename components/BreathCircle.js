@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { View, Text, Animated, StyleSheet } from 'react-native';
+import { View, Text, Animated, StyleSheet, Platform } from 'react-native';
 import Svg, { Path, Circle } from 'react-native-svg';
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
@@ -52,6 +52,7 @@ export default function BreathCircle({ scaleAnim, timerText, progress = 0, theme
                   transform: [{ scale: numberScale }] 
                 }
               ]}
+              {...(Platform.OS !== 'web' ? { collapsable: false } : {})}
             >
               {textParts[0]}
             </Animated.Text>
@@ -79,7 +80,7 @@ export default function BreathCircle({ scaleAnim, timerText, progress = 0, theme
         </View>
 
         {/* Plămânii 3D-ish Animați */}
-        <Animated.View style={[styles.lungsContainer, { transform: [{ scale: scaleAnim }] }]}>
+        <Animated.View {...(Platform.OS !== 'web' ? { collapsable: false } : {})} style={[styles.lungsContainer, { transform: [{ scale: scaleAnim }] }]}>
           <Svg width="180" height="180" viewBox="-100 -70 200 200">
             
             {/* 1. Traheea și Bronhiile Principale (mai groase și definite) */}

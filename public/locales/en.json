@@ -1,0 +1,45 @@
+{
+  "app": { "title": "Inner Fire", "subtitle": "Breath" },
+  "startSession": "Start Session",
+  "pause": "Pause",
+  "resume": "Resume",
+  "stop": "Stop",
+  "settings": { "title": "Session Settings", "customRounds": "Custom Rounds" },
+  "inputs": {
+    "prepTime": "Prep Time (sec)",
+    "rounds": "Rounds",
+    "breathSpeed": "Breath Speed (sec)",
+    "numBreaths": "Breaths / Round",
+    "breathOutHold": "Hold (OUT) (sec)",
+    "deepBreathTime": "Deep Breath (sec)",
+    "holdTime": "Hold (IN) (sec)",
+    "pauseAfterRound": "Pause Between Rounds (sec)"
+  },
+  "alerts": {
+    "roundRange": "Round must be between 1 and {max}",
+    "timePositive": "Time must be positive",
+    "roundExists": "Round {round} already has a time set.",
+    "maxCustomRounds": "You can set up to {max} custom rounds."
+  },
+  "addCustomRound": "Add Custom Round",
+  "restoreDefaults": "Restore Defaults",
+  "customRoundLabel": "Round {round}: {time} sec",
+  "customRoundPlaceholderRound": "Round #",
+  "customRoundPlaceholderTime": "Time (sec)",
+  "footer": { "madeWith": "Made with ❤️ in EU · ", "githubRepo": "GitHub Repo" },
+  "donations": "Donations:",
+  "btcWallet": "BTC Wallet"
+  ,
+  "phase": {
+    "ready": "Ready",
+    "preparing": "Preparing...",
+    "round": "Round {round}/{total}",
+    "round_hold": "Round {round}/{total} - HOLD AIR",
+    "deepBreath": "Take a deep breath",
+    "holdSeconds": "Hold for {seconds} seconds",
+    "letItGo": "Let it go...",
+    "sessionComplete": "Session Complete!",
+    "paused": "Paused",
+    "resumed": "Resumed"
+  }
+}

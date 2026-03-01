@@ -1,0 +1,45 @@
+{
+  "app": { "title": "Inner Fire", "subtitle": "Breath" },
+  "startSession": "Spustit sezení",
+  "pause": "Pauza",
+  "resume": "Pokračovat",
+  "stop": "Stop",
+  "settings": { "title": "Nastavení sezení", "customRounds": "Vlastní kola" },
+  "inputs": {
+    "prepTime": "Příprava (s)",
+    "rounds": "Kola",
+    "breathSpeed": "Rychlost dechu (s)",
+    "numBreaths": "Dechy / Kolo",
+    "breathOutHold": "Zadržení (OUT) (s)",
+    "deepBreathTime": "Hluboký nádech (s)",
+    "holdTime": "Zadržení (IN) (s)",
+    "pauseAfterRound": "Pauza mezi koly (s)"
+  },
+  "alerts": {
+    "roundRange": "Kolo musí být mezi 1 a {max}",
+    "timePositive": "Čas musí být kladný",
+    "roundExists": "Kolo {round} již má nastavený čas.",
+    "maxCustomRounds": "Můžete nastavit nejvíce {max} vlastních kol."
+  },
+  "addCustomRound": "Přidat vlastní kolo",
+  "restoreDefaults": "Obnovit výchozí hodnoty",
+  "customRoundLabel": "Kolo {round}: {time} s",
+  "customRoundPlaceholderRound": "Kolo #",
+  "customRoundPlaceholderTime": "Čas (s)",
+  "footer": { "madeWith": "Made with ❤️ in EU · ", "githubRepo": "GitHub Repo" },
+  "donations": "Dary:",
+  "btcWallet": "BTC Wallet"
+  ,
+  "phase": {
+    "ready": "Připraven",
+    "preparing": "Příprava...",
+    "round": "Kolo {round}/{total}",
+    "round_hold": "Kolo {round}/{total} - DRŽ VZDUCH",
+    "deepBreath": "Zhluboka se nadechněte",
+    "holdSeconds": "Držte po dobu {seconds} sekund",
+    "letItGo": "Nechte to jít...",
+    "sessionComplete": "Sezení dokončeno!",
+    "paused": "Pauza",
+    "resumed": "Pokračuje"
+  }
+}

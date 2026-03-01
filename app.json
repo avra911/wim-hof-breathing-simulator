@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Wim Hof Breath",
-    "slug": "wim-hof-mobile",
+    "name": "Inner Fire Breath",
+    "slug": "inner-fire-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -14,14 +14,14 @@
       "backgroundColor": "#000000"
     },
     "experiments": {
-      "baseUrl": "/wim-hof-breathing-simulator"
+      "baseUrl": "/inner-fire-breathing-simulator"
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.samezenbody.wimhofbreath"
+      "bundleIdentifier": "com.samezenbody.innerfirebreath"
     },
     "android": {
-      "package": "com.samezenbody.wimhofbreath",
+      "package": "com.samezenbody.innerfirebreath",
       "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/android-icon-foreground.png",
