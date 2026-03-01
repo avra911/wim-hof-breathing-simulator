@@ -16,27 +16,26 @@
     "pauseAfterRound": "Pausa entre rondas (seg)"
   },
   "alerts": {
-    "roundRange": "La ronda debe estar entre 1 y {max}",
+    "roundRange": "La ronda debe estar entre 1 y %{max}",
     "timePositive": "El tiempo debe ser positivo",
-    "roundExists": "La ronda {round} ya tiene un tiempo asignado.",
-    "maxCustomRounds": "Puedes configurar hasta {max} rondas personalizadas."
+    "roundExists": "La ronda %{round} ya tiene un tiempo asignado.",
+    "maxCustomRounds": "Puedes configurar hasta %{max} rondas personalizadas."
   },
   "addCustomRound": "Agregar Ronda Personalizada",
   "restoreDefaults": "Restaurar Valores",
-  "customRoundLabel": "Ronda {round}: {time} seg",
+  "customRoundLabel": "Ronda %{round}: %{time} seg",
   "customRoundPlaceholderRound": "Ronda #",
   "customRoundPlaceholderTime": "Tiempo (seg)",
   "footer": { "madeWith": "Made with ❤️ in EU · ", "githubRepo": "GitHub Repo" },
   "donations": "Donaciones:",
-  "btcWallet": "BTC Wallet"
-  ,
+  "btcWallet": "BTC Wallet",
   "phase": {
     "ready": "Listo",
     "preparing": "Preparando...",
-    "round": "Ronda {round}/{total}",
-    "round_hold": "Ronda {round}/{total} - MANTÉN EL AIRE",
+    "round": "Ronda %{round}/%{total}",
+    "round_hold": "Ronda %{round}/%{total} - MANTÉN EL AIRE",
     "deepBreath": "Toma una respiración profunda",
-    "holdSeconds": "Mantén durante {seconds} segundos",
+    "holdSeconds": "Mantén durante %{seconds} segundos",
     "letItGo": "Déjalo ir...",
     "sessionComplete": "¡Sesión completada!",
     "paused": "Pausa",

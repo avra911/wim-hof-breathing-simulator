@@ -16,14 +16,14 @@
     "pauseAfterRound": "Pause zwischen Runden (sek)"
   },
   "alerts": {
-    "roundRange": "Die Runde muss zwischen 1 und {max} liegen",
+    "roundRange": "Die Runde muss zwischen 1 und %{max} liegen",
     "timePositive": "Die Zeit muss positiv sein",
-    "roundExists": "Für Runde {round} ist bereits eine Zeit festgelegt.",
-    "maxCustomRounds": "Sie können bis zu {max} benutzerdefinierte Runden festlegen."
+    "roundExists": "Für Runde %{round} ist bereits eine Zeit festgelegt.",
+    "maxCustomRounds": "Sie können bis zu %{max} benutzerdefinierte Runden festlegen."
   },
   "addCustomRound": "Runde hinzufügen",
   "restoreDefaults": "Standard wiederherstellen",
-  "customRoundLabel": "Runde {round}: {time} sek",
+  "customRoundLabel": "Runde %{round}: %{time} sek",
   "customRoundPlaceholderRound": "Runde #",
   "customRoundPlaceholderTime": "Zeit (sek)",
   "footer": { "madeWith": "Gemacht mit ❤️ in der EU · ", "githubRepo": "GitHub Repo" },
@@ -32,10 +32,10 @@
   "phase": {
     "ready": "Bereit",
     "preparing": "Vorbereitung...",
-    "round": "Runde {round}/{total}",
-    "round_hold": "Runde {round}/{total} - LUFT ANHALTEN",
+    "round": "Runde %{round}/%{total}",
+    "round_hold": "Runde %{round}/%{total} - LUFT ANHALTEN",
     "deepBreath": "Nimm einen tiefen Atemzug",
-    "holdSeconds": "Halte für {seconds} Sekunden",
+    "holdSeconds": "Halte für %{seconds} Sekunden",
     "letItGo": "Lass es los...",
     "sessionComplete": "Sitzung beendet!",
     "paused": "Pausiert",

@@ -16,27 +16,26 @@
     "pauseAfterRound": "Pauză între runde (sec)"
   },
   "alerts": {
-    "roundRange": "Runda trebuie să fie între 1 și {max}",
+    "roundRange": "Runda trebuie să fie între 1 și %{max}",
     "timePositive": "Timpul trebuie să fie pozitiv",
-    "roundExists": "Runda {round} are deja un timp setat.",
-    "maxCustomRounds": "Poți seta maxim {max} runde personalizate."
+    "roundExists": "Runda %{round} are deja un timp setat.",
+    "maxCustomRounds": "Poți seta maxim %{max} runde personalizate."
   },
   "addCustomRound": "Adaugă Rundă Custom",
   "restoreDefaults": "Restore Defaults",
-  "customRoundLabel": "Runda {round}: {time} sec",
+  "customRoundLabel": "Runda %{round}: %{time} sec",
   "customRoundPlaceholderRound": "Runda #",
   "customRoundPlaceholderTime": "Timp (sec)",
   "footer": { "madeWith": "Made with ❤️ in EU · ", "githubRepo": "GitHub Repo" },
   "donations": "Donations:",
-  "btcWallet": "BTC Wallet"
-  ,
+  "btcWallet": "BTC Wallet",
   "phase": {
     "ready": "Pregătit de start",
     "preparing": "Pregătire...",
-    "round": "Runda {round}/{total}",
-    "round_hold": "Runda {round}/{total} - ȚINE AERUL",
+    "round": "Runda %{round}/%{total}",
+    "round_hold": "Runda %{round}/%{total} - ȚINE AERUL",
     "deepBreath": "Ia o respirație adâncă",
-    "holdSeconds": "Ține pentru {seconds} secunde",
+    "holdSeconds": "Ține pentru %{seconds} secunde",
     "letItGo": "Lasă-l să plece...",
     "sessionComplete": "Sesiune Completă!",
     "paused": "Pauză",

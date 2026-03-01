@@ -16,27 +16,26 @@
     "pauseAfterRound": "Pause Between Rounds (sec)"
   },
   "alerts": {
-    "roundRange": "Round must be between 1 and {max}",
+    "roundRange": "Round must be between 1 and %{max}",
     "timePositive": "Time must be positive",
-    "roundExists": "Round {round} already has a time set.",
-    "maxCustomRounds": "You can set up to {max} custom rounds."
+    "roundExists": "Round %{round} already has a time set.",
+    "maxCustomRounds": "You can set up to %{max} custom rounds."
   },
   "addCustomRound": "Add Custom Round",
   "restoreDefaults": "Restore Defaults",
-  "customRoundLabel": "Round {round}: {time} sec",
+  "customRoundLabel": "Round %{round}: %{time} sec",
   "customRoundPlaceholderRound": "Round #",
   "customRoundPlaceholderTime": "Time (sec)",
   "footer": { "madeWith": "Made with ❤️ in EU · ", "githubRepo": "GitHub Repo" },
   "donations": "Donations:",
-  "btcWallet": "BTC Wallet"
-  ,
+  "btcWallet": "BTC Wallet",
   "phase": {
     "ready": "Ready",
     "preparing": "Preparing...",
-    "round": "Round {round}/{total}",
-    "round_hold": "Round {round}/{total} - HOLD AIR",
+    "round": "Round %{round}/%{total}",
+    "round_hold": "Round %{round}/%{total} - HOLD AIR",
     "deepBreath": "Take a deep breath",
-    "holdSeconds": "Hold for {seconds} seconds",
+    "holdSeconds": "Hold for %{seconds} seconds",
     "letItGo": "Let it go...",
     "sessionComplete": "Session Complete!",
     "paused": "Paused",

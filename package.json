@@ -9,7 +9,8 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "predeploy": "npx expo export && npx workbox generateSW workbox-config.js",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist",
+    "postdeploy": "cd dist && git init && git remote add origin git@github.com:avra911/inner-fire-breathing-simulator.git &&  git checkout -b gh-pages && git add -A && git commit -m 'Initial commit' && git push origin gh-pages -f"
   },
   "dependencies": {
     "@expo/metro-runtime": "~6.1.2",

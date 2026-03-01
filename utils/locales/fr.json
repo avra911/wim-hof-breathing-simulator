@@ -16,27 +16,26 @@
     "pauseAfterRound": "Pause entre les tours (sec)"
   },
   "alerts": {
-    "roundRange": "Le tour doit être entre 1 et {max}",
+    "roundRange": "Le tour doit être entre 1 et %{max}",
     "timePositive": "Le temps doit être positif",
-    "roundExists": "Le tour {round} a déjà un temps défini.",
-    "maxCustomRounds": "Vous pouvez définir jusqu'à {max} tours personnalisés."
+    "roundExists": "Le tour %{round} a déjà un temps défini.",
+    "maxCustomRounds": "Vous pouvez définir jusqu'à %{max} tours personnalisés."
   },
   "addCustomRound": "Ajouter un tour personnalisé",
   "restoreDefaults": "Restaurer les valeurs",
-  "customRoundLabel": "Tour {round}: {time} sec",
+  "customRoundLabel": "Tour %{round}: %{time} sec",
   "customRoundPlaceholderRound": "Tour #",
   "customRoundPlaceholderTime": "Temps (sec)",
   "footer": { "madeWith": "Made with ❤️ in EU · ", "githubRepo": "GitHub Repo" },
   "donations": "Dons:",
-  "btcWallet": "BTC Wallet"
-  ,
+  "btcWallet": "BTC Wallet",
   "phase": {
     "ready": "Prêt",
     "preparing": "Préparation...",
-    "round": "Tour {round}/{total}",
-    "round_hold": "Tour {round}/{total} - RETENEZ L'AIR",
+    "round": "Tour %{round}/%{total}",
+    "round_hold": "Tour %{round}/%{total} - RETENEZ L'AIR",
     "deepBreath": "Prenez une profonde inspiration",
-    "holdSeconds": "Retenez pendant {seconds} secondes",
+    "holdSeconds": "Retenez pendant %{seconds} secondes",
     "letItGo": "Lâchez prise...",
     "sessionComplete": "Session terminée !",
     "paused": "Pause",
