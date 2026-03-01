@@ -1,0 +1,57 @@
+{
+  "expo": {
+    "name": "Wim Hof Breath",
+    "slug": "wim-hof-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#000000"
+    },
+    "experiments": {
+      "baseUrl": "/wim-hof-breathing-simulator"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.samezenbody.wimhofbreath"
+    },
+    "android": {
+      "package": "com.samezenbody.wimhofbreath",
+      "versionCode": 1,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundColor": "#000000"
+      },
+      "permissions": [
+        "WAKE_LOCK",
+        "INTERNET",
+        "MODIFY_AUDIO_SETTINGS"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro",
+      "output": "single" 
+    },
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": true
+          }
+        }
+      ]
+    ],
+    "owner": "same-zen-bodys-organization",
+    "extra": {
+      "eas": {
+        "projectId": "c884f6b9-bce6-42bb-b7ea-3fdbe517ec8c"
+      }
+    }
+  }
+}
