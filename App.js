@@ -136,8 +136,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#000000',
     paddingHorizontal: 20,
-    paddingRight: (Platform.OS === 'web' ? 20 : 0),
-    paddingLeft: (Platform.OS === 'web' ? 20 : 0),
     paddingTop: Platform.OS === 'android' ? RNStatusBar.currentHeight + 15 : (Platform.OS === 'web' ? 20 : 0)
   },
   header: {
