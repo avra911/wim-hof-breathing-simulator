@@ -1,6 +1,5 @@
 module.exports = {
   globDirectory: 'dist/',
-  // Spunem să salveze absolut tot (html, js, css, imagini, sunete)
   globPatterns: [
     '**/*.{html,js,css,woff2,png,jpg,svg,mp3,wav,json}'
   ],
@@ -8,5 +7,8 @@ module.exports = {
   ignoreURLParametersMatching: [
     /^utm_/,
     /^fbclid$/
-  ]
+  ],
+  maximumFileSizeToCacheInBytes: 5242880,
+  skipWaiting: true,
+  clientsClaim: true
 };
