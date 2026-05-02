@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { View, Text, Animated, StyleSheet, Platform } from 'react-native';
+import { View, Text, Animated, StyleSheet, Platform, Easing } from 'react-native';
 import Svg, { Path, Circle } from 'react-native-svg';
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
@@ -10,7 +10,8 @@ export default function BreathCircle({ scaleAnim, timerText, progress = 0, theme
   useEffect(() => {
     Animated.timing(animatedProgress, {
       toValue: progress,
-      duration: 500,
+      duration: 1000,
+      easing: Easing.linear,
       useNativeDriver: false,
     }).start();
   }, [progress]);
